@@ -10,34 +10,35 @@ randomWordList = ['Hua Mulan', 'Stitch', 'Aladdin', 'Princess Jasmine', 'Pinocch
 
 
 def fillWord(wordList):
-    for letter in randomName:
+    for letter in chosenWord:
         wordList.append('_')
 
 
-def splitWord(word):
-    return list(word)
-
-
-randomName = splitWord(randomWordList[random.randint(
-    0, len(randomWordList) - 1)])
+# randomName = splitWord(randomWordList[random.randint(
+#     0, len(randomWordList) - 1)])
+chosenWord = list(randomWordList[12])
 numOfGuesses = 0
 wins = 0
 losses = 0
-wrongGuesses = []
+graveyard = []
+wordDict = {}
 
 print('Welcome to Hangman! \nGuess the name in 6 tries and you win!')
 
 while True:
     print('%s Guesses, %s Wins, %s Losses' % (numOfGuesses, wins, losses))
     print('Enter your guess: (any letter from A-Z)')
+    board = fillWord([])
     playerGuess = input().lower()
-    correctGuesses = fillWord([])
-    for idx, letter in enumerate(randomName):
-        if playerGuess[0] == letter.lower():
-            correctGuesses[idx] == randomName[idx]
-            print(
-                f"""You guessed correct! \nYour word now looks
-                like {' '.join(correctGuesses)}""")
-        elif playerGuess != letter.lower():
-            wrongGuesses.append(playerGuess)
-            numOfGuesses += 1
+    for letter in chosenWord:
+      # make the dictionary for the word
+        if letter == ' ':
+            wordDict.setdefault('space', 0)
+            wordDict['space'] += 1
+        else:
+            wordDict.setdefault(letter.lower(), 0)
+            wordDict[letter.lower()] += 1
+
+        if playerGuess == letter:
+            print('You guessed correctly! \nGuess again.')
+    print(wordDict)
