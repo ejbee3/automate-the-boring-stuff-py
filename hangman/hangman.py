@@ -9,36 +9,51 @@ randomWordList = ['Hua Mulan', 'Stitch', 'Aladdin', 'Princess Jasmine', 'Pinocch
 # all taken from the Disney animated characters Wikipedia page
 
 
-def fillWord(wordList):
-    for letter in chosenWord:
-        wordList.append('_')
+def fillBoard(word):
+    for letter in randomWord:
+        if letter != ' ':
+            word.append('_')
+        else:
+            word.append(' ')
 
 
-# randomName = splitWord(randomWordList[random.randint(
-#     0, len(randomWordList) - 1)])
-chosenWord = list(randomWordList[12])
-numOfGuesses = 0
+def makeDict(dict):
+    for letter in randomWord:
+        wordDict.setdefault(letter, 0)
+        wordDict[letter] += 1
+
+
+randomWord = list(randomWordList[random.randint(
+    0, len(randomWordList) - 1)].lower())
+numOfGuessesLeft = 6
 wins = 0
 losses = 0
 graveyard = []
+board = []
 wordDict = {}
 
-print('Welcome to Hangman! \nGuess the name in 6 tries and you win!')
+print('Welcome to Hang that Disney Character! \nGuess the name in 6 tries and you win!')
 
-while True:
-    print('%s Guesses, %s Wins, %s Losses' % (numOfGuesses, wins, losses))
+fillBoard(board)
+makeDict(randomWord)
+
+print(f"Here's your mystery Disney character: {''.join(board)}")
+
+while numOfGuessesLeft > 0 and board != randomWord:
     print('Enter your guess: (any letter from A-Z)')
-    board = fillWord([])
     playerGuess = input().lower()
-    for letter in chosenWord:
-      # make the dictionary for the word
-        if letter == ' ':
-            wordDict.setdefault('space', 0)
-            wordDict['space'] += 1
-        else:
-            wordDict.setdefault(letter.lower(), 0)
-            wordDict[letter.lower()] += 1
+    if playerGuess in randomWord:
+        idx = [i for i, x in enumerate(randomWord) if x == playerGuess]
+        for indice in idx:
+            board[indice] = playerGuess
+        print(
+            f"\nYou guessed right! \nHere's your board: {''.join(board)}")
+    else:
+        graveyard.append(playerGuess)
+        numOfGuessesLeft -= 1
+        print(
+            f"""\nYou guessed wrong! You have {numOfGuessesLeft} guesses left.
+Here's your board: {''.join(board)} 
+Here's your graveyard: {' '.join(graveyard)}\n""")
 
-        if playerGuess == letter:
-            print('You guessed correctly! \nGuess again.')
-    print(wordDict)
+print('\nYou won! That Disney character is dead b/c of you.\n')
