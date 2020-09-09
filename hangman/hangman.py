@@ -1,4 +1,5 @@
 import random
+import sys
 
 randomWordList = ['Hua Mulan', 'Stitch', 'Aladdin', 'Princess Jasmine', 'Pinocchio', 'Phineas Flynn', 'Pocahontas',
                   'Rapunzel', 'Cheshire Cat', 'Cinderella', 'Hercules', 'Duchess', 'Figaro the cat',
@@ -17,43 +18,39 @@ def fillBoard(word):
             word.append(' ')
 
 
-def makeDict(dict):
-    for letter in randomWord:
-        wordDict.setdefault(letter, 0)
-        wordDict[letter] += 1
-
-
 randomWord = list(randomWordList[random.randint(
     0, len(randomWordList) - 1)].lower())
 numOfGuessesLeft = 6
-wins = 0
-losses = 0
 graveyard = []
 board = []
-wordDict = {}
 
 print('Welcome to Hang that Disney Character! \nGuess the name in 6 tries and you win!')
 
 fillBoard(board)
-makeDict(randomWord)
 
 print(f"Here's your mystery Disney character: {''.join(board)}")
 
-while numOfGuessesLeft > 0 and board != randomWord:
-    print('Enter your guess: (any letter from A-Z)')
-    playerGuess = input().lower()
-    if playerGuess in randomWord:
-        idx = [i for i, x in enumerate(randomWord) if x == playerGuess]
-        for indice in idx:
-            board[indice] = playerGuess
-        print(
-            f"\nYou guessed right! \nHere's your board: {''.join(board)}")
+while True:
+    if board == randomWord:
+        print('\nYou won! That Disney character is dead b/c of you.')
+        break
+    elif numOfGuessesLeft == 0:
+        print('You lost! That Disney Character will live on in infamy!')
+        break
+
     else:
-        graveyard.append(playerGuess)
-        numOfGuessesLeft -= 1
-        print(
-            f"""\nYou guessed wrong! You have {numOfGuessesLeft} guesses left.
+        print('Enter your guess: (any letter from A-Z)')
+        playerGuess = input().lower()
+        if playerGuess in randomWord:
+            idx = [i for i, x in enumerate(randomWord) if x == playerGuess]
+            for indice in idx:
+                board[indice] = playerGuess
+            print(
+                f"\nYou guessed right! \nHere's your board: {''.join(board)}")
+        else:
+            graveyard.append(playerGuess)
+            numOfGuessesLeft -= 1
+            print(
+                f"""\nYou guessed wrong! You have {numOfGuessesLeft} guesses left.
 Here's your board: {''.join(board)} 
 Here's your graveyard: {' '.join(graveyard)}\n""")
-
-print('\nYou won! That Disney character is dead b/c of you.\n')
