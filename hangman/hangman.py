@@ -24,7 +24,7 @@ numOfGuessesLeft = 6
 graveyard = []
 board = []
 
-print('Welcome to Hang that Disney Character! \nGuess the name in 6 tries and you win!')
+print('Welcome to Hang that Disney Character! \nGuess the name in 6 guesses and you win!')
 
 fillBoard(board)
 
@@ -34,7 +34,7 @@ while True:
     if board == randomWord:
         print('\nYou won! That Disney character is dead b/c of you.')
         break
-    elif numOfGuessesLeft == 0:
+    elif numOfGuessesLeft < 0:
         print('You lost! That Disney Character will live on in infamy!')
         break
 
