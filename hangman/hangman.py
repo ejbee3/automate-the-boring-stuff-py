@@ -32,7 +32,8 @@ print(f"Here's your mystery Disney character: {''.join(board)}")
 
 while True:
     if board == randomWord:
-        print('\nYou won! That Disney character is dead b/c of you.')
+        print(
+            f"\nYou won! {''.join(randomWord).capitalize()} is dead b/c of you.")
         break
     elif numOfGuessesLeft < 0:
         print('You lost! That Disney Character will live on in infamy!')
@@ -46,11 +47,11 @@ while True:
             for indice in idx:
                 board[indice] = playerGuess
             print(
-                f"\nYou guessed right! \nHere's your board: {''.join(board)}")
+                f"\nYou guessed right! \nHere's your board: {''.join(board).capitalize()}")
         else:
             graveyard.append(playerGuess)
             numOfGuessesLeft -= 1
             print(
                 f"""\nYou guessed wrong! You have {numOfGuessesLeft} guesses left.
-Here's your board: {''.join(board)} 
+Here's your board: {''.join(board).capitalize()} 
 Here's your graveyard: {' '.join(graveyard)}\n""")
